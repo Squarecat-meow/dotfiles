@@ -6,4 +6,6 @@
 ## 지금 있는 것
 
 - Lazyvim
+- niri
+- waybar
 
