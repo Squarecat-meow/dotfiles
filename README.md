@@ -9,3 +9,12 @@
 - niri
 - waybar
 
+## 의존성 패키지들
+
+- sway-screenshot
+- xdg-desktop-portal-gnome
+- xwayland-satellite
+
+## 주의할 점
+
+- niri의 config.kdl에 50번줄을 보면 ~/Documents/wallpaper.sh가 있는데 이거는 제가 쓰고 있는 `mpvpaper`(움직이는 바탕화면)용 실행 스크립트인데요 이걸 빼고 swww나 기타 원하는 바탕화면 데몬을 넣으시면 됩니다

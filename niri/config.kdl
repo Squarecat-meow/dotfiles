@@ -253,7 +253,7 @@ layout {
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
-spawn-at-startup "swww-daemon"
+spawn-at-startup "~/Documents/wallpaper.sh"
 spawn-at-startup "fcitx5"
 spawn-at-startup "waybar"
 spawn-at-startup "xwayland-satellite"
@@ -571,6 +571,7 @@ binds {
     // Mod+Shift+Space { switch-layout "prev"; }
 
     Mod+grave { spawn "sway-screenshot" "-m" "region" "--clipboard-only"; }
+    Mod+Shift+grave { spawn "sway-screenshot" "-m" "output" "--clipboard-only"; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
 
