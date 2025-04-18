@@ -291,6 +291,17 @@ animations {
 // Window rules let you adjust behavior for individual windows.
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
+//
+
+hotkey-overlay {
+  skip-at-startup
+}
+
+// Make Window Corner Rounded
+window-rule {
+  geometry-corner-radius 12
+  clip-to-geometry true
+}
 
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
@@ -559,7 +570,7 @@ binds {
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
-    Mod+grave { screenshot; }
+    Mod+grave { spawn "sway-screenshot" "-m" "region" "--clipboard-only"; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
 
