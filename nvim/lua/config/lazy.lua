@@ -58,3 +58,5 @@ require("lazy").setup({
     },
   },
 })
+
+vim.lsp.enable("typescript-language-server")
