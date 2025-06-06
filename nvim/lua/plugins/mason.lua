@@ -1,7 +1,7 @@
 return {
   {
-    "williamboman/mason.nvim",
-    opts = { ensure_installed = { "gitui" } },
+    "mason-org/mason.nvim",
+    opts = { ensure_installed = { "gitui", "prettier" } },
     keys = {
       {
         "<leader>gG",
