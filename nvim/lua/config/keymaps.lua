@@ -6,3 +6,5 @@ vim.keymap.set("n", "<leader>cs", vim.cmd.LiveServerStart, { desc = "Start Live 
 vim.keymap.set("n", "<leader>cS", vim.cmd.LiveServerStop, { desc = "Stop Live Server" })
 
 vim.keymap.set("n", "<leader>gm", vim.cmd.Gitmoji, { desc = "Gitmoji" })
+vim.keymap.set("n", "<leader>po", vim.cmd.PeekOpen, { desc = "Markdown Preview open" })
+vim.keymap.set("n", "<leader>pq", vim.cmd.PeekClose, { desc = "Markdown Preview close" })
