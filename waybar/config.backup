@@ -1,24 +1,29 @@
 {
   "layer": "top", // Waybar at top layer
   "position": "top", // Waybar position (top|bottom|left|right)
+  "height": 20,
   "margin": "0 0 0 0",
   //"width": 1350, // Waybar width
   // Choose the order of the modules idle_inhibitor
-  "modules-center": [
-    "sway/workspaces",
+  "modules-left": [
+    "niri/workspaces",
+    "niri/window",
     "custom/cava-internal",
-    "custom/music",
-    "cpu",
-    "memory",
-    "network",
+    "custom/music"
+  ],
+  "modules-center": ["clock"],
+  "modules-right": [
     "pulseaudio",
-    "clock"
+    "memory",
+    "cpu",
+    "network",
+    "custom/power"
   ],
 
   // Modules configuration
 
-  "sway/workspaces": {
-    "disable-scroll": false,
+  "niri/workspaces": {
+    "disable-scroll": true,
     "sort-by-name": true,
     "format": " {icon} ",
     "format-icons": {
@@ -26,7 +31,7 @@
     },
   },
   
-  "sway/window": {
+  "niri/window": {
     "format": "{}",
     "tooltip": false,
     "min-length": 5,
@@ -134,6 +139,7 @@
     "exec": "sh ~/.config/waybar/scripts/Cava.sh",
     "format": "{}",
     "tooltip": false,
+    "on-click": "swaymsg reload & pkill waybar & waybar",
     "layer": "below",
     "output": "all"
   },
@@ -168,9 +174,8 @@
       "on-scroll-down": "shift_down"
     },
     // "format": "  {:%a %d %b  %I:%M %p}", //12 hour format
-    // "format": " {:%Y %m %d  %H:%M}",	//24 hour format
-    // "format": "  {:%H:%M}", //24 hour format
-    "format": "  {:%Y/%m/%d   %H:%M:%S}",
+    "format": " {:%Y %m %d  %H:%M}",	//24 hour format
+    "format-alt": "  {:%d/%m/%Y  %H:%M:%S}",
     // //"timezones": [ "Kolkata" ],
     // //"max-length": 200
     "interval": 1
@@ -221,7 +226,7 @@
     "on-click": "nm-connection-editor"
   },
   "pulseaudio": {
-    "scroll-step": 10,
+    "scroll-step": 1,
     "format": "{icon} {volume: >3}%",
     "format-bluetooth": "{icon} {volume: >3}%",
     "format-muted": " muted",
