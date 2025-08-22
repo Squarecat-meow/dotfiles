@@ -5,7 +5,7 @@
   //"width": 1350, // Waybar width
   // Choose the order of the modules idle_inhibitor
   "modules-center": [
-    "sway/workspaces",
+    "niri/workspaces",
     "custom/cava-internal",
     "custom/music",
     "cpu",
@@ -17,7 +17,7 @@
 
   // Modules configuration
 
-  "sway/workspaces": {
+  "niri/workspaces": {
     "disable-scroll": false,
     "sort-by-name": true,
     "format": " {icon} ",
@@ -221,7 +221,7 @@
     "on-click": "nm-connection-editor"
   },
   "pulseaudio": {
-    "scroll-step": 10,
+    "scroll-step": 5,
     "format": "{icon} {volume: >3}%",
     "format-bluetooth": "{icon} {volume: >3}%",
     "format-muted": " muted",
@@ -234,7 +234,7 @@
       "car": "",
       "default": ["", ""]
     },
-    "on-click": "pavucontrol",
+    "on-click": "pwvucontrol",
     "on-scroll-up": "pamixer -ui 2 && pamixer --get-volume > $SWAYSOCK.wob",
     "on-scroll-down": "pamixer -ud 2 && pamixer --get-volume > $SWAYSOCK.wob"
   },

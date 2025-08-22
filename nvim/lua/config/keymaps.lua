@@ -8,3 +8,5 @@ vim.keymap.set("n", "<leader>cS", vim.cmd.LiveServerStop, { desc = "Stop Live Se
 vim.keymap.set("n", "<leader>gm", vim.cmd.Gitmoji, { desc = "Gitmoji" })
 vim.keymap.set("n", "<leader>po", vim.cmd.PeekOpen, { desc = "Markdown Preview open" })
 vim.keymap.set("n", "<leader>pq", vim.cmd.PeekClose, { desc = "Markdown Preview close" })
+
+vim.keymap.set("n", "<leader>tt", vim.cmd.TodoQuickFix, { desc = "List of Commented Todos" })
