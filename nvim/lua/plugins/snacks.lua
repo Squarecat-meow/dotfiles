@@ -7,6 +7,12 @@ return {
     picker = {
       hidden = true,
       ignored = true,
+      exclude = {
+        "node_modules",
+        ".git",
+        "package-lock.json",
+        ".next",
+      },
     },
   },
 }
