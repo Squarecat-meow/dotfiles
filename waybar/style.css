@@ -10,8 +10,8 @@
  * Keyframes
  * -------------------------------------------------------------------------- */
 
-@import 'machiatto.css';
-
+/* @import 'machiatto.css'; */
+@import "../../.cache/wal/colors-waybar.css";
 /*
   Polar Night
   nord0  #2e3440
@@ -40,19 +40,18 @@
    * -------------------------------------------------------------------------- */
 
 /* Reset all styles */
-
 * {
   color: @lavender;
   border: 0;
   padding: 0 0;
-  font-family: 'Iosevka Nerd Font';
+  font-family: "Iosevka Nerd Font";
   /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
   /* font-family: "Hack Nerd Font"; */
   font-size: 12px;
   font-weight: normal;
   /* padding-bottom:4px;
       padding-top: 4px; */
-  transition: all 0.5s ease;
+  transition: all 0.2s ease-in-out;
 }
 
 window#waybar {
@@ -65,7 +64,7 @@ window#waybar {
 }
 
 #workspaces button {
-  color: @base;
+  color: @color9;
   border-radius: 50%;
   /* background-color: @base; */
   margin: 0px 0px;
@@ -73,11 +72,11 @@ window#waybar {
 }
 
 #workspaces button:hover * {
-  color: @mauve;
+  color: @color9;
 }
 
 #workspaces button:hover {
-  color: @mauve;
+  color: @color9;
   box-shadow: none;
   /* Remove predefined box-shadow */
   text-shadow: none;
@@ -87,26 +86,27 @@ window#waybar {
 }
 
 #workspaces * {
-  color: whitesmoke;
+  color: @color6;
 }
 
 #workspaces {
+  border-width: 1px 0px 1px 1px;
+  border-color: @color6;
   border-style: solid;
-  background-color: @base;
-  opacity: 1;
   border-radius: 10px 0px 0px 10px;
+  background-color: @background;
+  opacity: 1;
   padding-left: 5px;
-  margin: 8px 0px 8px 8px;
+  margin: 12px 0px;
 }
 
 #workspaces button.focused {
-  color: @mauve;
+  color: @color6;
   border-radius: 20px;
-  /* background-color: @flamingo; */
 }
 
 #workspaces button.focused * {
-  color: @mauve;
+  color: @color6;
 }
 
 #mode {
@@ -131,12 +131,15 @@ window#waybar {
 #custom-power,
 #custom-pacman,
 #mpd,
+#custom-notification,
 #custom-music {
   padding: 5px 8px;
+  border-width: 1px 0px;
   border-style: solid;
-  background-color: shade(@base, 1.1);
+  border-color: @color6;
+  background-color: @background;
   opacity: 1;
-  margin: 8px 0;
+  margin: 12px 0;
 }
 
 /* -----------------------------------------------------------------------------
@@ -154,39 +157,7 @@ window#waybar {
 }
 
 #custom-music {
-  color: @mauve;
-}
-
-#mpd {
-  border-radius: 10px;
-  color: @mauve;
-  margin-left: 5px;
-  background-color: rgba(0, 0, 0, 0);
-}
-
-#mpd.2 {
-  border-radius: 10px 0px 0px 10px;
-  margin: 8px 0px 8px 6px;
-  padding: 4px 12px 4px 10px;
-}
-
-#mpd.3 {
-  border-radius: 0px 0px 0px 0px;
-  margin: 8px 0px 8px 0px;
-  padding: 4px;
-}
-
-#mpd.4 {
-  border-radius: 0px 10px 10px 0px;
-  margin: 8px 0px 8px 0px;
-  padding: 4px 10px 4px 14px;
-}
-
-#mpd.2,
-#mpd.3,
-#mpd.4 {
-  background-color: @base;
-  font-size: 14px;
+  color: @color6;
 }
 
 #custom-swap {
@@ -206,8 +177,12 @@ window#waybar {
 #clock {
   /* background-color:#a3be8c; */
   color: @yellow;
+}
+
+#custom-notification {
+  color: @peach;
   border-radius: 0px 10px 10px 0px;
-  padding-right: 12px;
+  padding-right: 24px;
 }
 
 #backlight {
@@ -246,26 +221,21 @@ window#waybar {
 }
 
 #cpu {
-  color: @sky;
-  /* border-bottom: 2px solid @sky; */
-}
-
-#cpu #cpu-icon {
-  color: @sky;
+  color: @color6;
 }
 
 #memory {
-  color: @sky;
+  color: @color6;
+}
+
+#network {
+  color: @color5;
+  /* border-bottom: 2px solid @green; */
 }
 
 #network.disabled {
   color: #bf616a;
   /* border-bottom: 2px solid #bf616a; */
-}
-
-#network {
-  color: @green;
-  /* border-bottom: 2px solid @green; */
 }
 
 #network.disconnected {
@@ -274,7 +244,7 @@ window#waybar {
 }
 
 #pulseaudio {
-  color: @flamingo;
+  color: @color6;
   /* border-bottom: 2px solid @flamingo; */
 }
 
@@ -339,6 +309,17 @@ window#waybar {
   /* border-bottom: 2px solid @peach; */
   border-radius: 0 10px 10px 0;
   margin-right: 10px;
+}
+
+#clock {
+  color: @color6;
+}
+
+#custom-notification {
+  border-width: 1px 1px 1px 0px;
+  border-color: @color6;
+  border-style: solid;
+  color: @color6;
 }
 
 /* window#waybar {

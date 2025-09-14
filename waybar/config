@@ -4,15 +4,16 @@
   "margin": "0 0 0 0",
   //"width": 1350, // Waybar width
   // Choose the order of the modules idle_inhibitor
+  "reload_style_on_change": true,
   "modules-center": [
     "niri/workspaces",
-    "custom/cava-internal",
     "custom/music",
     "cpu",
     "memory",
     "network",
     "pulseaudio",
-    "clock"
+    "clock",
+    "custom/notification"
   ],
 
   // Modules configuration
@@ -137,6 +138,26 @@
     "layer": "below",
     "output": "all"
   },
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "<span foreground='red'><sup></sup></span>",
+      "none": "",
+      "dnd-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-none": "",
+      "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
@@ -145,6 +166,8 @@
     }
   },
   "clock": {
+    "format": "  {:%Y/%m/%d   %H:%M:%S}",
+    "interval": 1,
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
     "calendar": {
       "mode": "month",
@@ -167,48 +190,12 @@
       "on-scroll-up": "shift_up",
       "on-scroll-down": "shift_down"
     },
-    // "format": "  {:%a %d %b  %I:%M %p}", //12 hour format
-    // "format": " {:%Y %m %d  %H:%M}",	//24 hour format
-    // "format": "  {:%H:%M}", //24 hour format
-    "format": "  {:%Y/%m/%d   %H:%M:%S}",
-    // //"timezones": [ "Kolkata" ],
-    // //"max-length": 200
-    "interval": 1
   },
-  // "clock": {
-  //     "format": "  {:%H:%M:%S}",
-  //     "format-alt": "  {:%A, %B %d, %Y (%R)}",
-  //     "tooltip-format": "<tt><small>{calendar}</small></tt>",
-  //     "calendar": {
-  //         "mode"          : "month",
-  //         "mode-mon-col"  : 3,
-  //         "weeks-pos"     : "right",
-  //         "on-scroll"     : 1,
-  //         "on-click-right": "mode",
-  //         "format": {
-  //             "months":     "<span color='#ffead3'><b>{}</b></span>",
-  //             "days":       "<span color='#ecc6d9'><b>{}</b></span>",
-  //             "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
-  //             "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
-  //             "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
-  //         }
-  //     },
-  //     "actions": {
-  //         "on-click-right": "mode",
-  //         "on-click-forward": "tz_up",
-  //         "on-click-backward": "tz_down",
-  //         "on-scroll-up": "shift_up",
-  //         "on-scroll-down": "shift_down"
-  //     },
-  //     "interval": 1
-  // },
   "cpu": {
     "format": " {usage: >3}%",
-    "on-click": "alacritty -e htop"
   },
   "memory": {
-    "format": " {: >3}%",
-    "on-click": "alacritty -e htop"
+    "format": "{:>3}%",
   },
   "network": {
     // "interface": "wlp2s0", // (Optional) To force the use of this interface
