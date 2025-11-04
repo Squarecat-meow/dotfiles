@@ -7,13 +7,15 @@
   "reload_style_on_change": true,
   "modules-center": [
     "niri/workspaces",
-    "custom/music",
+    "niri/window",
     "cpu",
     "memory",
     "network",
+    "bluetooth",
     "pulseaudio",
     "clock",
-    "custom/notification"
+    "custom/notification",
+    "custom/power"
   ],
 
   // Modules configuration
@@ -27,7 +29,7 @@
     },
   },
   
-  "sway/window": {
+  "niri/window": {
     "format": "{}",
     "tooltip": false,
     "min-length": 5,
@@ -166,13 +168,12 @@
     }
   },
   "clock": {
-    "format": "  {:%Y/%m/%d   %H:%M:%S}",
+    "format": "  {:%H:%M:%S}",
     "interval": 1,
-    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "tooltip-format": "<tt>{calendar}</tt>",
     "calendar": {
       "mode": "month",
       "mode-mon-col": 3,
-      "weeks-pos": "right",
       "on-scroll": 1,
       "on-click-right": "mode",
       "format": {
@@ -227,12 +228,21 @@
   },
   "custom/power": {
     "format": "⏻",
-    "on-click": "nwgbar",
+    "on-click": "swaylock",
     "tooltip": false
   },
   "custom/launcher": {
     "format": " ",
     "on-click": "exec nwg-drawer -c 7 -is 70 -spacing 23",
     "tooltip": false
+  },
+  "bluetooth": {
+    // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
+    "format": " {status}",
+    "format-disabled": "", // an empty format will hide the module
+    "format-connected": " {num_connections} connected",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
   }
 }

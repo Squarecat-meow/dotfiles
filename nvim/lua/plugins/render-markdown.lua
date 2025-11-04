@@ -6,6 +6,8 @@ return {
     config = function()
       require("render-markdown").setup({
         enabled = true,
+        preset = "obsidian",
+        render_modes = { "n", "c" },
       })
     end,
   },

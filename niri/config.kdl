@@ -76,7 +76,7 @@ output "HDMI-A-1" {
     // for the resolution.
     // If the mode is omitted altogether or is invalid, niri will pick one automatically.
     // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-    mode "3840x2160@60"
+    mode "1920x1080@60"
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
     scale 1
@@ -97,11 +97,11 @@ output "HDMI-A-1" {
     position x=0 y=0
 }
 
-// output "DVI-D-1" {
-//   mode "1920x1080@60"
-//   scale 1
-//   position x=1920 y=0
-// }
+output "DVI-D-1" {
+  mode "1920x1080@120"
+  position x=1920 y=0
+  transform "normal"
+}
 
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
@@ -116,7 +116,7 @@ layout {
   // - "always", the focused column will always be centered.
   // - "on-overflow", focusing a column will center it if it doesn't fit
   //   together with the previously focused column.
-  center-focused-column "never"
+  center-focused-column "always"
 
   // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
   preset-column-widths {
@@ -132,10 +132,10 @@ layout {
   }
 
   // You can also customize the heights that "switch-preset-window-height" (Mod+Shift+R) toggles between.
-  // preset-window-heights { }
+  preset-window-heights { proportion 0.66667; }
 
   // You can change the default width of the new windows.
-  default-column-width { proportion 0.5; }
+  default-column-width { proportion 0.66667; }
   // If you leave the brackets empty, the windows themselves will decide their initial width.
   // default-column-width {}
 
@@ -224,7 +224,7 @@ layout {
       // pixels and match the CSS box-shadow properties.
 
       // Softness controls the shadow blur radius.
-      softness 0
+      softness 8
 
       // Spread expands the shadow.
       spread 1
@@ -233,7 +233,7 @@ layout {
       offset x=0 y=0
 
       // You can also change the shadow color and opacity.
-      color "#F6CECE"
+      color "#090909aa"
   }
 
   // Struts shrink the area occupied by windows, similarly to layer-shell panels.
@@ -244,7 +244,7 @@ layout {
   struts {
       // left 64
       // right 64
-      top -12
+      // top -12
       // bottom 64
   }
 }
@@ -276,7 +276,7 @@ environment {
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
 // The path is formatted with strftime(3) to give you the screenshot date and time.
-screenshot-path null
+// screenshot-path null
 
 // You can also set this to null to disable saving screenshots to disk.
 // screenshot-path null
@@ -331,20 +331,19 @@ window-rule {
   open-maximized true
 }
 
-// Window rule for element-desktop with half-width
-window-rule {
-  match app-id="Element"
-  open-maximized false
-}
-
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
 window-rule {
     // This regular expression is intentionally made as specific as possible,
     // since this is the default config, and we want no false positives.
     // You can get away with just app-id="wezterm" if you want.
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
+  match app-id="Element"
+  open-maximized false
+}
+
+window-rule {
+  match app-id=r#"^kitty$"#
+  open-maximized false
 }
 
 // Open the Firefox picture-in-picture player as floating by default.
@@ -376,8 +375,8 @@ window-rule {
     open-fullscreen false
     open-floating true
 
-    max-width 625;
-    max-height 1355;
+    max-width 369;
+    max-height 800;
 }
 
 // Put swaybg inside the overview backdrop.
@@ -414,7 +413,7 @@ binds {
     Mod+T { spawn "kitty"; }
     Mod+D { spawn "nautilus"; }
     Mod+Space { spawn "rofi" "-show" "run"; }
-    Mod+Return { spawn "firefox"; }
+    Mod+Return { spawn "zen"; }
     Super+Shift+Space { spawn "bemoji"; }
     Super+Shift+L { spawn "wlogout" "-p" "layer-shell"; }
 

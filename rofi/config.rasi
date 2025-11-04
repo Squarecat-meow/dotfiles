@@ -9,4 +9,62 @@ configuration {
     display-filebrowser: "󰉋 filebrowser:";
 }
 
-@theme "~/.config/rofi/catppuccin-lavrent-mocha.rasi"
+@theme "~/.cache/wal/colors-rofi-dark.rasi"
+
+* {
+  font: "JetBrainsMono Nerd Font regular 9";
+  text-color: white;
+
+  margin  : 0;
+  padding : 0;
+  spacing : 0;
+}
+
+ 
+window {
+  location : northwest;
+  width    : 400px;
+  x-offset : 0px;
+  y-offset : -28px;
+
+  border-radius: 0px 0px 15px 0px;
+}
+
+icon-search, entry, element-icon, element-text {
+  vertical-align: 0.5;
+  background-color: transparent;
+}
+
+element {
+  padding : 2px 4px;
+  spacing : 8px;
+}
+
+element normal urgent {
+  text-color: @foreground;
+}
+
+element normal active {
+  text-color: yellow;
+}
+
+element alternate active {
+  text-color: yellow;
+}
+
+element selected {
+  text-color       : white;
+  background-color : @background;
+}
+
+element selected urgent {
+  background-color: yellow;
+}
+
+element-icon {
+  size: 1em;
+}
+
+element-text {
+  text-color: inherit;
+}
