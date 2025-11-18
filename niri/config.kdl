@@ -17,6 +17,8 @@ input {
           // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
           // options "korean:ralt_hangul"
       }
+      repeat-delay 300
+      repeat-rate 40
     }
 
     // Next sections include libinput settings.
@@ -57,7 +59,14 @@ input {
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    // focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse max-scroll-amount="0%"
+}
+
+cursor {
+    xcursor-theme "GoogleDot-Blue"
+    xcursor-size 36
+
+    hide-when-typing
 }
 
 // You can configure outputs by their name, which you can find
@@ -66,7 +75,7 @@ input {
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
-output "HDMI-A-1" {
+output "DVI-D-1" {
     // Uncomment this line to disable this output.
     // off
 
@@ -97,9 +106,16 @@ output "HDMI-A-1" {
     position x=0 y=0
 }
 
-output "DVI-D-1" {
+output "DP-3" {
   mode "1920x1080@120"
   position x=1920 y=0
+  transform "normal"
+}
+
+output "HDMI-A-1" {
+  mode "2160x1440@60"
+  scale 1.25
+  position x=90 y=1080
   transform "normal"
 }
 
@@ -110,13 +126,15 @@ layout {
     // Set gaps around windows in logical pixels.
   gaps 16
 
+  background-color "transparent"
+
   // When to center a column when changing focus, options are:
   // - "never", default behavior, focusing an off-screen column will keep at the left
   //   or right edge of the screen.
   // - "always", the focused column will always be centered.
   // - "on-overflow", focusing a column will center it if it doesn't fit
   //   together with the previously focused column.
-  center-focused-column "always"
+  center-focused-column "on-overflow"
 
   // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
   preset-column-widths {
@@ -135,7 +153,7 @@ layout {
   preset-window-heights { proportion 0.66667; }
 
   // You can change the default width of the new windows.
-  default-column-width { proportion 0.66667; }
+  // default-column-width { proportion 0.66667; }
   // If you leave the brackets empty, the windows themselves will decide their initial width.
   // default-column-width {}
 
@@ -244,8 +262,12 @@ layout {
   struts {
       // left 64
       // right 64
-      // top -12
+      top -6
       // bottom 64
+  }
+
+  blur {
+    on
   }
 }
 
@@ -254,9 +276,8 @@ layout {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 
-spawn-at-startup "swww-daemon" "--namespace" "wallpaper"
-spawn-at-startup "swww-daemon" "--namespace" "backdrop"
-spawn-at-startup "wal" "-R"
+spawn-at-startup "swww-daemon"
+spawn-at-startup "xrdb" "-merge" "~/.Xresources"
 spawn-at-startup "swaync"
 spawn-at-startup "fcitx5"
 spawn-at-startup "waybar"
@@ -383,7 +404,7 @@ window-rule {
 layer-rule {
     match namespace="^swww-daemonbackdrop$"
 
-    place-within-backdrop true
+    // place-within-backdrop true
 }
 
 // Block out mako notifications from screencasts.
@@ -393,6 +414,13 @@ layer-rule {
     block-out-from "screencast"
 }
 
+window-rule {
+    match title="Kando Menu"
+
+    open-floating true
+    border { off; }
+    shadow { off; }
+}
 
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
@@ -412,11 +440,10 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T { spawn "kitty"; }
     Mod+D { spawn "nautilus"; }
-    Mod+Space { spawn "rofi" "-show" "run"; }
+    Mod+Space { spawn-sh "rofi -show run"; }
     Mod+Return { spawn "zen"; }
-    Super+Shift+Space { spawn "bemoji"; }
+    Mod+Shift+Space { spawn "bemoji"; }
     Super+Shift+L { spawn "wlogout" "-p" "layer-shell"; }
-
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
     // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }
@@ -649,3 +676,4 @@ binds {
     // Overview
     Mod+Slash { toggle-overview; }
 }
+
