@@ -1,0 +1,4 @@
+[[mgr.append_keymap]]
+on = "<C-h>"
+run = "hidden --toggle"
+desc = "Hide and show hidden files and folders"

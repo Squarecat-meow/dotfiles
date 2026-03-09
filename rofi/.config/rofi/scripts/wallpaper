@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+## Wallpaper Selector using rofi + swww (with thumbnails)
+
+WALLPAPER_DIR="$HOME/Pictures/Wallpaper"
+THUMB_DIR="$HOME/.cache/rofi-wallpaper-thumbs"
+dir="$HOME/.config/rofi/launchers/type-3"
+theme='wallpaper'
+
+if [ ! -d "$WALLPAPER_DIR" ]; then
+  notify-send "Wallpaper" "Directory not found: $WALLPAPER_DIR"
+  exit 1
+fi
+
+mkdir -p "$THUMB_DIR"
+
+# Generate 16:9 thumbnails in parallel
+while IFS= read -r file; do
+  filename=$(basename "$file")
+  thumb="$THUMB_DIR/$filename"
+  if [ ! -f "$thumb" ] || [ "$file" -nt "$thumb" ]; then
+    magick "$file" -thumbnail 320x180^ -gravity center -extent 320x180 "$thumb" 2>/dev/null &
+  fi
+done < <(find "$WALLPAPER_DIR" -maxdepth 1 -type f \
+  \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.gif' -o -iname '*.webp' -o -iname '*.bmp' \))
+wait
+
+# Show rofi with thumbnail icons
+selected=$(find "$WALLPAPER_DIR" -maxdepth 1 -type f \
+  \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.gif' -o -iname '*.webp' -o -iname '*.bmp' \) \
+  -printf '%f\n' | sort | while IFS= read -r name; do
+  echo -en "${name}\0icon\x1f${THUMB_DIR}/${name}\n"
+done | rofi -dmenu -i -p "" -show-icons -theme "${dir}/${theme}.rasi")
+
+if [ -n "$selected" ]; then
+  swww img "$WALLPAPER_DIR/$selected" --transition-type grow --transition-duration 1
+  wallust run "$WALLPAPER_DIR/$selected" -q
+  eww reload
+fi
