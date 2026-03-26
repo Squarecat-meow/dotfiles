@@ -6,7 +6,7 @@
 CACHE="/tmp/eww_weather_cache.json"
 MAX_AGE=1800 # 30분
 
-if [[ -f "$CACHE" ]]; then
+if [[ -f "$CACHE" && -s "$CACHE" ]]; then
   age=$(($(date +%s) - $(stat -c %Y "$CACHE")))
   if ((age < MAX_AGE)); then
     cat "$CACHE"

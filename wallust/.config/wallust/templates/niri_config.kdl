@@ -7,6 +7,7 @@
 // Find the full list of options on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
 input {
+    mod-key "Super"
     keyboard {
       xkb {
           // You can set rules, model, layout, variant and options.
@@ -15,7 +16,7 @@ input {
           // For example:
           // layout "us"
           // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
-          // options "korean:ralt_hangul"
+          // options "altwin:swap_alt_win"
       }
       repeat-delay 300
       repeat-rate 40
@@ -25,7 +26,7 @@ input {
     // Omitting settings disables them, or leaves them at their default values.
     touchpad {
         // off
-        tap
+        // tap
         // dwt
         // dwtp
         drag-lock
@@ -39,8 +40,8 @@ input {
     mouse {
         // off
         // natural-scroll
-        // accel-speed 0.2
-        // accel-profile "flat"
+        accel-speed 0.5
+        accel-profile "flat"
         // scroll-method "no-scroll"
     }
 
@@ -63,7 +64,7 @@ input {
 }
 
 cursor {
-    xcursor-theme "GoogleDot-Blue"
+    xcursor-theme "Ninomae-Inanis"
     xcursor-size 36
 
     hide-when-typing
@@ -75,7 +76,7 @@ cursor {
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
-output "DVI-D-1" {
+output "DVI-I-1" {
     // Uncomment this line to disable this output.
     // off
 
@@ -103,28 +104,34 @@ output "DVI-D-1" {
     // so to put another output directly adjacent to it on the right, set its x to 1920.
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
-    position x=0 y=0
+    position x=1920 y=0
 }
 
-output "DP-3" {
-  mode "1920x1080@120"
-  position x=1920 y=0
+output "DP-1" {
+  mode "1920x1080@60"
+  position x=0 y=0
   transform "normal"
 }
 
 output "HDMI-A-1" {
-  mode "2160x1440@60"
-  scale 1.25
-  position x=90 y=1080
+  mode "2160x14400@60"
+  position x=1920 y=1080
   transform "normal"
 }
+
+// output "HDMI-A-1" {
+//   mode "2160x1440@60"
+//   scale 1.1
+//   position x=90 y=1080
+//   transform "normal"
+// }
 
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-  gaps 16
+  gaps 8
 
   background-color "transparent"
 
@@ -134,7 +141,7 @@ layout {
   // - "always", the focused column will always be centered.
   // - "on-overflow", focusing a column will center it if it doesn't fit
   //   together with the previously focused column.
-  center-focused-column "on-overflow"
+  center-focused-column "never"
 
   // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
   preset-column-widths {
@@ -207,11 +214,11 @@ layout {
   border {
       // The settings are the same as for the focus ring.
       // If you enable the border, you probably want to disable the focus ring.
-      off
+      // off
 
       width 1
-      active-color "#ffc87f"
-      inactive-color "#505050"
+      active-color "{{foreground}}"
+      inactive-color "{{background}}"
 
       // active-gradient from="#ffbb66" to="#ffc880" angle=45 relative-to="workspace-view"
       // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
@@ -262,12 +269,19 @@ layout {
   struts {
       // left 64
       // right 64
-      top -6
+      top -4
       // bottom 64
   }
+}
 
-  blur {
-    on
+blur {
+  on
+  passes 2
+}
+
+overview {
+  workspace-shadow {
+    off
   }
 }
 
@@ -276,15 +290,16 @@ layout {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 
-spawn-at-startup "swww-daemon"
-spawn-at-startup "xrdb" "-merge" "~/.Xresources"
-spawn-at-startup "swaync"
+spawn-at-startup "dunst"
+spawn-at-startup "swww-daemon --namespace wallpaper"
 spawn-at-startup "fcitx5"
-spawn-at-startup "waybar"
+spawn-sh-at-startup "eww open-many bar0 bar1 sysmenu0 sysmenu1 cal0 cal1 notif0 notif1"
+spawn-at-startup "bongocat"
 spawn-at-startup "xwayland-satellite"
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
 environment {
-  DISPLAY ":0"
+  DISPLAY ":1"
 }
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
@@ -292,7 +307,7 @@ environment {
 // Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
 // This option will also fix border/focus ring drawing behind some semitransparent windows.
 // After enabling or disabling this, you need to restart the apps for this to take effect.
-// prefer-no-csd
+prefer-no-csd
 
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
@@ -312,27 +327,89 @@ animations {
     // Slow down all animations by this factor. Values below 1 speed them up instead.
     // slowdown 3.0
     workspace-switch {
-      spring damping-ratio=0.7 stiffness=1500 epsilon=0.0001
+      curve "cubic-bezier" 0.08 0.82 0.17 1
     }
 
     window-open {
-      spring damping-ratio=0.7 stiffness=1500 epsilon=0.0001
+      curve "ease-out-expo"
+      duration-ms 400
+      custom-shader r"
+        vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+            float progress = niri_clamped_progress;
+            float inv_progress = 1.0 - progress;
+
+            float angle = inv_progress * -0.1; 
+            float s = sin(angle);
+            float c = cos(angle);
+            mat2 rotation = mat2(c, -s, s, c);
+
+            vec2 pivot = vec2(0.5, 0.5);
+            vec2 rotated_coords = rotation * (coords_geo.xy - pivot) + pivot;
+
+            float slide_amount = 0.1;
+            float offset = inv_progress * slide_amount;
+            
+            vec3 final_geo_coords = vec3(rotated_coords.x, rotated_coords.y + offset, 1.0);
+
+            vec3 coords_tex = niri_geo_to_tex * final_geo_coords;
+
+            vec4 color = vec4(0.0);
+            if (coords_tex.x >= 0.0 && coords_tex.x <= 1.0 &&
+                coords_tex.y >= 0.0 && coords_tex.y <= 1.0) {
+                color = texture2D(niri_tex, coords_tex.st);
+            }
+
+            return color * progress;
+        }
+      "
     }
 
     window-resize {
-      spring damping-ratio=0.7 stiffness=1500 epsilon=0.0001
+      curve "ease-out-expo"
+      duration-ms 400
     }
 
     window-close {
-      spring damping-ratio=0.7 stiffness=1500 epsilon=0.0001
+      curve "ease-out-expo"
+      duration-ms 400
+      custom-shader r"
+        vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+            float progress = niri_clamped_progress;
+            float fade = 1.0 - progress;
+
+            float angle = progress * 0.1; 
+            float s = sin(angle);
+            float c = cos(angle);
+            mat2 rotation = mat2(c, -s, s, c);
+
+            vec2 pivot = vec2(0.5, 0.5);
+            vec2 rotated_coords = rotation * (coords_geo.xy - pivot) + pivot;
+
+            float slide_amount = 0.1;
+            float offset = progress * slide_amount;
+            
+            vec3 final_geo_coords = vec3(rotated_coords.x, rotated_coords.y - offset, 1.0);
+
+            vec3 coords_tex = niri_geo_to_tex * final_geo_coords;
+
+            vec4 color = vec4(0.0);
+            if (coords_tex.x >= 0.0 && coords_tex.x <= 1.0 &&
+                coords_tex.y >= 0.0 && coords_tex.y <= 1.0) {
+                color = texture2D(niri_tex, coords_tex.st);
+            }
+
+            return color * fade;
+        }
+      "
     }
 
     overview-open-close {
-      spring damping-ratio=0.7 stiffness=1500 epsilon=0.0001
+      curve "ease-out-expo"
+      duration-ms 300
     }
 
     horizontal-view-movement {
-      spring damping-ratio=0.7 stiffness=1500 epsilon=0.0001
+      curve "cubic-bezier" 0.08 0.82 0.17 1
     }
 }
 
@@ -350,6 +427,7 @@ window-rule {
   geometry-corner-radius 12
   clip-to-geometry true
   open-maximized true
+  draw-border-with-background false
 }
 
 // Work around WezTerm's initial configure bug
@@ -364,6 +442,11 @@ window-rule {
 
 window-rule {
   match app-id=r#"^kitty$"#
+  open-maximized false
+}
+
+window-rule {
+  match app-id=r#"^org.gnome.gedit$"#
   open-maximized false
 }
 
@@ -402,9 +485,9 @@ window-rule {
 
 // Put swaybg inside the overview backdrop.
 layer-rule {
-    match namespace="^swww-daemonbackdrop$"
+    match namespace="^swww-daemonwallpaper$"
 
-    // place-within-backdrop true
+    place-within-backdrop true
 }
 
 // Block out mako notifications from screencasts.
@@ -414,12 +497,23 @@ layer-rule {
     block-out-from "screencast"
 }
 
-window-rule {
-    match title="Kando Menu"
+layer-rule {
+  match namespace="^rofi$"
 
-    open-floating true
-    border { off; }
-    shadow { off; }
+  geometry-corner-radius 12
+
+  shadow {
+    on
+    softness 8
+    spread 1
+    offset x=0 y=0
+    color "#090909aa"
+  }
+
+  background-effect {
+    xray false
+    blur true
+  }
 }
 
 binds {
@@ -440,10 +534,10 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T { spawn "kitty"; }
     Mod+D { spawn "nautilus"; }
-    Mod+Space { spawn-sh "rofi -show run"; }
-    Mod+Return { spawn "zen"; }
-    Mod+Shift+Space { spawn "bemoji"; }
-    Super+Shift+L { spawn "wlogout" "-p" "layer-shell"; }
+    Mod+Space { spawn-sh "~/.config/rofi/launchers/type-3/launcher.sh"; }
+    Mod+Return { spawn "firefox"; }
+    Mod+Shift+Space { spawn-sh "BEMOJI_PICKER_CMD='rofi -i -dmenu -p \"\" -theme ~/.config/rofi/scripts/bemoji/bemoji.rasi' bemoji"; }
+    Mod+Shift+O { spawn "~/.config/rofi/scripts/wallpaper"; }
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
     // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }

@@ -33,7 +33,6 @@ selected=$(find "$WALLPAPER_DIR" -maxdepth 1 -type f \
 done | rofi -dmenu -i -p "" -show-icons -theme "${dir}/${theme}.rasi")
 
 if [ -n "$selected" ]; then
-  swww img "$WALLPAPER_DIR/$selected" --transition-type grow --transition-duration 1
+  swww img "$WALLPAPER_DIR/$selected" --namespace wallpaper --transition-type grow --transition-duration 1
   wallust run "$WALLPAPER_DIR/$selected" -q
-  eww reload
 fi

@@ -76,7 +76,7 @@ cursor {
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
-output "DVI-I-1" {
+output "DVI-D-1" {
     // Uncomment this line to disable this output.
     // off
 
@@ -107,15 +107,9 @@ output "DVI-I-1" {
     position x=1920 y=0
 }
 
-output "DP-1" {
-  mode "1920x1080@60"
-  position x=0 y=0
-  transform "normal"
-}
-
 output "HDMI-A-1" {
-  mode "2160x14400@60"
-  position x=1920 y=1080
+  mode "1920x1090@60"
+  position x=0 y=0
   transform "normal"
 }
 
@@ -131,7 +125,7 @@ output "HDMI-A-1" {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-  gaps 16
+  gaps 8
 
   background-color "transparent"
 
@@ -214,11 +208,11 @@ layout {
   border {
       // The settings are the same as for the focus ring.
       // If you enable the border, you probably want to disable the focus ring.
-      off
+      // off
 
       width 1
-      active-color "#ffc87f"
-      inactive-color "#505050"
+      active-color "#F7F2E4"
+      inactive-color "#2B2B2B"
 
       // active-gradient from="#ffbb66" to="#ffc880" angle=45 relative-to="workspace-view"
       // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
@@ -269,7 +263,7 @@ layout {
   struts {
       // left 64
       // right 64
-      top -12
+      top -4
       // bottom 64
   }
 }
@@ -279,16 +273,20 @@ blur {
   passes 2
 }
 
+overview {
+  workspace-shadow {
+    off
+  }
+}
+
 // Add lines like this to spawn processes at startup.
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 
-spawn-at-startup "dunst"
-spawn-at-startup "swww-daemon"
+spawn-sh-at-startup "swww-daemon --namespace wallpaper"
 spawn-at-startup "fcitx5"
-spawn-sh-at-startup "eww open-many bar0 bar1 sysmenu0 sysmenu1 cal0 cal1 notif0 notif1"
-spawn-at-startup "bongocat"
+spawn-at-startup "quickshell"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
@@ -421,6 +419,7 @@ window-rule {
   geometry-corner-radius 12
   clip-to-geometry true
   open-maximized true
+  draw-border-with-background false
 }
 
 // Work around WezTerm's initial configure bug
@@ -478,9 +477,9 @@ window-rule {
 
 // Put swaybg inside the overview backdrop.
 layer-rule {
-    match namespace="^swww-daemonbackdrop$"
+    match namespace="^swww-daemonwallpaper$"
 
-    // place-within-backdrop true
+    place-within-backdrop true
 }
 
 // Block out mako notifications from screencasts.
@@ -488,6 +487,25 @@ layer-rule {
     match namespace="^swaync-notification-window$"
 
     block-out-from "screencast"
+}
+
+layer-rule {
+  match namespace="^rofi$"
+
+  geometry-corner-radius 12
+
+  shadow {
+    on
+    softness 8
+    spread 1
+    offset x=0 y=0
+    color "#090909aa"
+  }
+
+  background-effect {
+    xray false
+    blur true
+  }
 }
 
 binds {
@@ -509,7 +527,7 @@ binds {
     Mod+T { spawn "kitty"; }
     Mod+D { spawn "nautilus"; }
     Mod+Space { spawn-sh "~/.config/rofi/launchers/type-3/launcher.sh"; }
-    Mod+Return { spawn "zen"; }
+    Mod+Return { spawn "firefox"; }
     Mod+Shift+Space { spawn-sh "BEMOJI_PICKER_CMD='rofi -i -dmenu -p \"\" -theme ~/.config/rofi/scripts/bemoji/bemoji.rasi' bemoji"; }
     Mod+Shift+O { spawn "~/.config/rofi/scripts/wallpaper"; }
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.

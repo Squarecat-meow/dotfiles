@@ -60,6 +60,7 @@
   (revealer :transition "slideleft" :reveal {weather.ok} :duration "200ms"
     (button :class "bar-weather"
             :onclick "${EWW_CMD} update weather_open=${weather_open ? 'false' : 'true'}"
+            :onmiddleclick "rm -f /tmp/eww_weather_cache.json && ${EWW_CMD} update weather=$(~/.config/eww/scripts/weather.sh)"
       (box :orientation "h" :space-evenly false :spacing 6
         (label :class "bar-weather-icon" :text {weather.icon})
         (label :class "bar-weather-temp" :text {"${weather.temp}°"})))))
@@ -97,7 +98,7 @@
 ;; 볼륨 컨트롤
 (defwidget volume_ctl []
   (eventbox :class "volume-ctl"
-            :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+            :onclick "pavucontrol &"
             :onscroll "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%{} && wpctl set-volume @DEFAULT_AUDIO_SINK@ -l 1.0"
     (box :orientation "h" :space-evenly false :spacing 4
       (label :class "vol-icon"
@@ -261,7 +262,7 @@
 
 ;; 바 (LG FULL HD)
 (defwindow bar0
-  :monitor 2
+  :monitor 1
   :stacking "overlay"
   :exclusive true
   :focusable false
@@ -271,7 +272,7 @@
 
 ;; 바 (2757)
 (defwindow bar1
-  :monitor 1
+  :monitor 2
   :stacking "overlay"
   :exclusive true
   :focusable false
