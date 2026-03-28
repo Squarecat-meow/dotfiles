@@ -5,9 +5,16 @@
 
 ## 지금 있는 것
 
-- Lazyvim
+- Neovim
 - niri
-- waybar
+- quickshell
+- kitty
+- yazi
+- rofi
+- cava
+- fastfetch
+- oh-my-posh
+- wallust
 
 ## 의존성 패키지들
 
