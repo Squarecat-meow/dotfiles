@@ -1,0 +1,2 @@
+singleton NiriIpc NiriIpc.qml
+singleton CavaService CavaService.qml

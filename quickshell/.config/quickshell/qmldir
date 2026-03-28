@@ -1,0 +1,3 @@
+singleton Theme Theme.qml
+singleton ExpandState ExpandState.qml
+singleton WeatherData WeatherData.qml

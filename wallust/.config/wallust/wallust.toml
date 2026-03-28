@@ -39,7 +39,6 @@ palette = "dark"
 #alpha = 100
 
 [templates]
-eww = { template = 'eww_colors.scss', target = '~/.config/eww/_colors.scss' }
 quickshell = { template = 'quickshell_colors.json', target = '~/.cache/wallust/quickshell_colors.json' }
 niri = { template = 'niri_config.kdl', target = '~/.config/niri/config.kdl' }
 kitty = { template = 'kitty_colors.conf', target = '~/.config/kitty/current-theme.conf' }

@@ -1,0 +1,10 @@
+[general]
+bars = 12
+framerate = 30
+sensitivity = 100
+
+[output]
+method = raw
+raw_target = /dev/stdout
+data_format = ascii
+ascii_max_range = 100
