@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-## Wallpaper Selector using rofi + swww (with thumbnails)
+## Wallpaper Selector using rofi + awww (with thumbnails)
 
 WALLPAPER_DIR="$HOME/Pictures/Wallpaper"
 THUMB_DIR="$HOME/.cache/rofi-wallpaper-thumbs"
@@ -33,6 +33,6 @@ selected=$(find "$WALLPAPER_DIR" -maxdepth 1 -type f \
 done | rofi -dmenu -i -p "" -show-icons -theme "${dir}/${theme}.rasi")
 
 if [ -n "$selected" ]; then
-  swww img "$WALLPAPER_DIR/$selected" --namespace wallpaper --transition-type grow --transition-duration 1
+  awww img "$WALLPAPER_DIR/$selected" --namespace wallpaper --transition-type grow --transition-duration 1
   wallust run "$WALLPAPER_DIR/$selected" -q
 fi

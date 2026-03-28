@@ -76,7 +76,7 @@ cursor {
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
-output "DVI-I-1" {
+output "DVI-D-1" {
     // Uncomment this line to disable this output.
     // off
 
@@ -107,15 +107,9 @@ output "DVI-I-1" {
     position x=1920 y=0
 }
 
-output "DP-1" {
+output "HDMI-A-2" {
   mode "1920x1080@60"
   position x=0 y=0
-  transform "normal"
-}
-
-output "HDMI-A-1" {
-  mode "2160x14400@60"
-  position x=1920 y=1080
   transform "normal"
 }
 
@@ -290,11 +284,9 @@ overview {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 
-spawn-at-startup "dunst"
-spawn-at-startup "swww-daemon --namespace wallpaper"
+spawn-sh-at-startup "awww-daemon --namespace wallpaper"
 spawn-at-startup "fcitx5"
-spawn-sh-at-startup "eww open-many bar0 bar1 sysmenu0 sysmenu1 cal0 cal1 notif0 notif1"
-spawn-at-startup "bongocat"
+spawn-at-startup "quickshell"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
@@ -485,7 +477,7 @@ window-rule {
 
 // Put swaybg inside the overview backdrop.
 layer-rule {
-    match namespace="^swww-daemonwallpaper$"
+    match namespace="^awww-daemonwallpaper$"
 
     place-within-backdrop true
 }

@@ -107,8 +107,8 @@ output "DVI-D-1" {
     position x=1920 y=0
 }
 
-output "HDMI-A-1" {
-  mode "1920x1090@60"
+output "HDMI-A-2" {
+  mode "1920x1080@60"
   position x=0 y=0
   transform "normal"
 }
@@ -211,8 +211,8 @@ layout {
       // off
 
       width 1
-      active-color "#F7F2E4"
-      inactive-color "#2B2B2B"
+      active-color "#FCF9F3"
+      inactive-color "#000F00"
 
       // active-gradient from="#ffbb66" to="#ffc880" angle=45 relative-to="workspace-view"
       // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
@@ -284,7 +284,7 @@ overview {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 
-spawn-sh-at-startup "swww-daemon --namespace wallpaper"
+spawn-sh-at-startup "awww-daemon --namespace wallpaper"
 spawn-at-startup "fcitx5"
 spawn-at-startup "quickshell"
 spawn-at-startup "xwayland-satellite"
@@ -477,7 +477,7 @@ window-rule {
 
 // Put swaybg inside the overview backdrop.
 layer-rule {
-    match namespace="^swww-daemonwallpaper$"
+    match namespace="^awww-daemonwallpaper$"
 
     place-within-backdrop true
 }
