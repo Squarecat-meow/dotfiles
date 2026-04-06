@@ -40,7 +40,7 @@ input {
     mouse {
         // off
         // natural-scroll
-        accel-speed 0.5
+        accel-speed 0.3
         accel-profile "flat"
         // scroll-method "no-scroll"
     }
@@ -435,6 +435,11 @@ window-rule {
 window-rule {
   match app-id=r#"^kitty$"#
   open-maximized false
+
+  background-effect {
+    xray false
+    blur true
+  }
 }
 
 window-rule {
