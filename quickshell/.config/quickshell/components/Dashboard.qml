@@ -61,6 +61,16 @@ Item {
             color: Qt.rgba(Theme.dimColor.r, Theme.dimColor.g, Theme.dimColor.b, 0.3)
         }
 
+        BluetoothPanel {
+            Layout.alignment: Qt.AlignTop
+        }
+
+        Rectangle {
+            Layout.fillHeight: true
+            width: 1
+            color: Qt.rgba(Theme.dimColor.r, Theme.dimColor.g, Theme.dimColor.b, 0.3)
+        }
+
         PowerButtons {
             Layout.alignment: Qt.AlignTop
         }

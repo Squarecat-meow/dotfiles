@@ -13,25 +13,33 @@ Item {
 
     implicitHeight: expandedH
 
-    // 검정 -> 투명 그라데이션 배경
+    // ExpandState에 확장 높이 전달 (Dock/프레임 오프셋용) — 항상 최신 유지
+    Binding {
+        target: ExpandState
+        property: "expandedHeight"
+        value: root.dashHeight
+    }
+
+    // L자 프레임 상단 파트
     Rectangle {
         id: bg
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
-        height: ExpandState.expanded ? root.expandedH : Theme.barHeight
+        // offset 하나로 높이 제어 — Dock/프레임과 완전 동기화
+        height: Theme.barHeight + ExpandState.offset
         clip: true
+        color: Theme.bgColor
 
-        Behavior on height {
-            NumberAnimation {
-                duration: 300
-                easing.type: Easing.OutCubic
-            }
-        }
-
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: Qt.rgba(0, 0, 0, 0.85) }
-            GradientStop { position: 1.0; color: "transparent" }
+        // 하단 테두리: 코너 라운딩 사이 직선 부분
+        Rectangle {
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: Theme.dockWidth + Theme.radius
+            anchors.rightMargin: Theme.frameWidth + Theme.radius
+            height: Theme.borderWidth
+            color: Theme.borderColor
         }
 
         // Top bar - 3 섹션 레이아웃
@@ -108,7 +116,7 @@ Item {
             anchors.top: topBar.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            height: bg.height - Theme.barHeight
+            height: root.dashHeight
             clip: true
 
             Rectangle {
@@ -119,7 +127,7 @@ Item {
                 anchors.rightMargin: 16
                 height: 1
                 color: Qt.rgba(Theme.dimColor.r, Theme.dimColor.g, Theme.dimColor.b, 0.3)
-                opacity: ExpandState.expanded ? 1 : 0
+                opacity: ExpandState.offset > 0 ? 1 : 0
 
                 Behavior on opacity { NumberAnimation { duration: 200 } }
             }
@@ -129,11 +137,11 @@ Item {
                 anchors.top: parent.top
                 anchors.topMargin: 8
                 anchors.horizontalCenter: parent.horizontalCenter
-                opacity: ExpandState.expanded ? 1 : 0
+                opacity: ExpandState.offset > 0 ? 1 : 0
 
                 Behavior on opacity {
                     NumberAnimation {
-                        duration: ExpandState.expanded ? 200 : 150
+                        duration: 200
                         easing.type: Easing.OutCubic
                     }
                 }

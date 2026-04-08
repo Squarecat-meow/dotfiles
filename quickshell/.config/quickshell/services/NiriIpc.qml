@@ -7,6 +7,7 @@ QtObject {
     id: root
 
     property var workspaces: []
+    property var windows: []
     property int focusedWorkspaceId: -1
 
     property Process queryProc: Process {
@@ -28,22 +29,44 @@ QtObject {
         }
     }
 
+    property Process windowProc: Process {
+        command: ["niri", "msg", "-j", "windows"]
+        stdout: SplitParser {
+            splitMarker: ""
+            onRead: data => {
+                try {
+                    root.windows = JSON.parse(data)
+                } catch (e) {}
+            }
+        }
+    }
+
     property Timer pollTimer: Timer {
         interval: 500
         running: true
         repeat: true
         triggeredOnStart: true
-        onTriggered: queryProc.running = true
+        onTriggered: {
+            queryProc.running = true
+            windowProc.running = true
+        }
     }
 
     function focusWorkspace(idx) {
-        var proc = focusProc.createObject(root, {
+        var proc = actionProc.createObject(root, {
             command: ["niri", "msg", "action", "focus-workspace", String(idx)]
         })
         proc.running = true
     }
 
-    property Component focusProc: Component {
+    function focusWindow(windowId) {
+        var proc = actionProc.createObject(root, {
+            command: ["niri", "msg", "action", "focus-window", "--id", String(windowId)]
+        })
+        proc.running = true
+    }
+
+    property Component actionProc: Component {
         Process {
             onExited: destroy()
         }
@@ -51,5 +74,9 @@ QtObject {
 
     function workspacesForOutput(output) {
         return workspaces.filter(function(ws) { return ws.output === output })
+    }
+
+    function windowsByAppId(appId) {
+        return windows.filter(function(w) { return w.app_id === appId })
     }
 }

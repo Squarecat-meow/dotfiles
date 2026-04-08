@@ -24,6 +24,7 @@ ShellRoot {
         }
     }
 
+    // 상단바
     Variants {
         model: Quickshell.screens
 
@@ -37,7 +38,7 @@ ShellRoot {
                 left: true
                 right: true
             }
-            exclusiveZone: 36
+            exclusiveZone: Theme.barHeight
             color: "transparent"
             implicitHeight: barContent.expandedH
 
@@ -50,6 +51,141 @@ ShellRoot {
                 anchors.top: parent.top
                 outputName: modelData.name
             }
+        }
+    }
+
+    // 좌측 Dock — PanelWindow는 고정, 내부 콘텐츠만 offset
+    Variants {
+        model: Quickshell.screens
+
+        PanelWindow {
+            id: dockWindow
+            property var modelData
+            screen: modelData
+
+            anchors {
+                left: true
+                top: true
+                bottom: true
+            }
+            exclusiveZone: Theme.dockWidth
+            color: "transparent"
+            implicitWidth: Theme.dockWidth
+
+            mask: Region { item: dockContent.bgItem }
+
+            Components.Dock {
+                id: dockContent
+                anchors.fill: parent
+            }
+        }
+    }
+
+    // 우측 프레임 — PanelWindow는 고정, 내부 테두리만 offset
+    Variants {
+        model: Quickshell.screens
+
+        PanelWindow {
+            id: frameRight
+            property var modelData
+            screen: modelData
+
+            anchors {
+                right: true
+                top: true
+                bottom: true
+            }
+            exclusiveZone: Theme.frameWidth
+            color: "transparent"
+            implicitWidth: Theme.frameWidth
+
+            mask: Region { item: frameRightContent.bgItem }
+
+            Components.FrameEdge {
+                id: frameRightContent
+                anchors.fill: parent
+                edge: "right"
+            }
+        }
+    }
+
+    // 하단 프레임
+    Variants {
+        model: Quickshell.screens
+
+        PanelWindow {
+            id: frameBottom
+            property var modelData
+            screen: modelData
+
+            anchors {
+                bottom: true
+                left: true
+                right: true
+            }
+            exclusiveZone: Theme.frameWidth
+            color: "transparent"
+            implicitHeight: Theme.frameWidth
+
+            mask: Region { item: frameBottomContent.bgItem }
+
+            Components.FrameEdge {
+                id: frameBottomContent
+                anchors.fill: parent
+                edge: "bottom"
+            }
+        }
+    }
+
+    // 콘텐츠 영역 코너 라운딩 (4개)
+    // 좌상: Bar↔Dock 교차점 — 확장 시 offset만큼 내려감
+    Variants {
+        model: Quickshell.screens
+        PanelWindow {
+            property var modelData; screen: modelData
+            anchors { top: true; left: true }
+            margins.top: ExpandState.offset
+            exclusiveZone: 0; color: "transparent"
+            implicitWidth: Theme.radius; implicitHeight: Theme.radius
+            mask: Region { item: cornerTL.bgItem }
+            Components.FrameCorner { id: cornerTL; anchors.fill: parent; corner: "topLeft" }
+        }
+    }
+    // 우상: Bar↔우측프레임 교차점 — 확장 시 offset만큼 내려감
+    Variants {
+        model: Quickshell.screens
+        PanelWindow {
+            property var modelData; screen: modelData
+            anchors { top: true; right: true }
+            margins.top: ExpandState.offset
+            exclusiveZone: 0; color: "transparent"
+            implicitWidth: Theme.radius; implicitHeight: Theme.radius
+            mask: Region { item: cornerTR.bgItem }
+            Components.FrameCorner { id: cornerTR; anchors.fill: parent; corner: "topRight" }
+        }
+    }
+    // 좌하: Dock↔하단프레임 교차점
+    Variants {
+        model: Quickshell.screens
+        PanelWindow {
+            property var modelData; screen: modelData
+            anchors { bottom: true; left: true }
+            exclusiveZone: 0; color: "transparent"
+            implicitWidth: Theme.radius; implicitHeight: Theme.radius
+            mask: Region { item: cornerBL.bgItem }
+            Components.FrameCorner { id: cornerBL; anchors.fill: parent; corner: "bottomLeft" }
+        }
+    }
+    // 우하: 우측프레임↔하단프레임 교차점
+    Variants {
+        model: Quickshell.screens
+        PanelWindow {
+            property var modelData; screen: modelData
+            anchors { bottom: true; right: true }
+            exclusiveZone: 0; color: "transparent"
+            implicitWidth: Theme.radius; implicitHeight: Theme.radius
+            mask: Region { item: cornerBR.bgItem }
+            Components.FrameCorner { id: cornerBR; anchors.fill: parent; corner: "bottomRight" }
         }
     }
 

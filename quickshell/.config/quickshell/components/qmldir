@@ -19,3 +19,9 @@ Weather 1.0 Weather.qml
 WeatherForecast 1.0 WeatherForecast.qml
 NotificationToast 1.0 NotificationToast.qml
 WorkspaceIndicator 1.0 WorkspaceIndicator.qml
+Dock 1.0 Dock.qml
+DockItem 1.0 DockItem.qml
+FrameEdge 1.0 FrameEdge.qml
+FrameCorner 1.0 FrameCorner.qml
+BluetoothPanel 1.0 BluetoothPanel.qml
+BluetoothDeviceItem 1.0 BluetoothDeviceItem.qml

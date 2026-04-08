@@ -31,6 +31,20 @@ QtObject {
     readonly property int spacing: 12
     readonly property int modulePadding: 8
 
+    // Noctalia-style border & shape
+    readonly property int borderWidth: 1
+    readonly property color borderColor: Qt.rgba(fgColor.r, fgColor.g, fgColor.b, 0.12)
+    readonly property int radius: 12
+    readonly property int radiusSmall: 8
+
+    // Dock
+    readonly property int dockWidth: 48
+    readonly property int dockIconSize: 32
+    readonly property int dockPadding: 8
+
+    // Frame (우측/하단 액자 테두리)
+    readonly property int frameWidth: 8
+
     property Process colorProc: Process {
         command: ["cat", Quickshell.env("HOME") + "/.cache/wallust/quickshell_colors.json"]
         stdout: SplitParser {
